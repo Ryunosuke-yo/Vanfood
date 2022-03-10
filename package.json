@@ -1,0 +1,25 @@
+{
+  "name": "vanfood",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ryunosuke-yo/Vanfood.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ryunosuke-yo/Vanfood/issues"
+  },
+  "homepage": "https://github.com/Ryunosuke-yo/Vanfood#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.2.5",
+    "nodemon": "^2.0.15"
+  }
+}
