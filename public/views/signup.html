@@ -27,7 +27,7 @@
   
   <div class="loginPage">
     <div class="loginText">
-      <img src="images/loginlogo.png">
+      <img src="../images/loginlogo.png">
       <h3>Welcome to <span> Vanfood Paradise </span></h3>
       <p>Vancouver has many free and low-cost food programs, including grocery hampers, food bank programs, and lowcost groceries for those facing food insecurity. </p>
       <ul>
@@ -39,11 +39,11 @@
     <div class="loginForm">
       <h6>Welcome</h6>
       <h3>Sign Up as a new user</h3>
-      <form class="userloginform">
+      <form class="userloginform" action="/postuser" method="post">
             <label>Email : </label>   
-            <input type="email" name="username" required>  
+            <input type="email" name="username" required class="signUp_email">  
             <label>Password : </label>   
-            <input type="password"  name="password" required>  
+            <input type="password"  name="password" required class="signUp_password">  
             <button type="submit" class="btn-default">Sign Up</button> 
       </form>
       <p>Already have an account? <a href="login.html">Login</a></p>
@@ -58,5 +58,6 @@
 <!-- slick Carousel CDN -->
 <script src="../js/script.js" type="text/javascript"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
+<script src="../js/getAndPost.js" type="text/javascript"></script>
 </body>
 </html>
