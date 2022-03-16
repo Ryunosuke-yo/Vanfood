@@ -27,7 +27,7 @@ export default function(){
     return (
     <main>
         <Link to="/login">
-        <a>test signup page</a>
+        <a>test login page</a>
         </Link>
         <Link to="/signup">
         <a>test signup page</a>

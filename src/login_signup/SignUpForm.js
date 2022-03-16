@@ -1,6 +1,12 @@
+import axios from "axios";
 import React from "react";
+import { useForm } from "react-hook-form";
 
 export default function(){
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = data => {
+        axios.post("/postuser", data)
+    }
 
     return (
         <div className="loginPage">
@@ -17,11 +23,11 @@ export default function(){
             <div className="loginForm">
             <h6>Welcome</h6>
             <h3>Sign Up as a new user</h3>
-            <form className="userloginform" action="/postuser" method="post">
+            <form className="userloginform" onSubmit={handleSubmit(onSubmit)}>
                     <label>Email : </label>   
-                    <input type="email" name="username" required className="signUp_email" />  
+                    <input type="email" name="username" required className="signUp_email" {...register("username")}/>  
                     <label>Password : </label>   
-                    <input type="password"  name="password" required className="signUp_password" />  
+                    <input type="password"  name="password" required className="signUp_password" {...register("password")}/>  
                     <button type="submit" class="btn-default">Sign Up</button> 
             </form>
             <p>Already have an account? <a href="login.html">Login</a></p>

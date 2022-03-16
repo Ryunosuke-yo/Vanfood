@@ -1,6 +1,5 @@
 
 import './style.css';
-import './script.js';
 import ReactDOM from 'react-dom'; // installed using npm
 import {
     BrowserRouter,

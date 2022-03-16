@@ -1,4 +1,5 @@
 import React from "react";
+import {AiOutlineSearch} from "react-icons/ai"
 
 export default function(){
 
@@ -17,7 +18,9 @@ export default function(){
         <div className="search-container">
           <form action="/action_page.php">
             <input type="text" placeholder="Search.." name="search" />
-            <button type="submit"><i className="fa fa-search"></i></button>
+            <button type="submit">
+              <AiOutlineSearch />
+            </button>
           </form>
         </div>
         <div className="loginUser">

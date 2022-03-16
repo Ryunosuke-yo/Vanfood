@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path');
 const mongoose = require("mongoose")
-const user = require("./src/user")
+const user = require("./src/lib/user")
 const app = express()
 const port = 3000
 require('dotenv').config();
