@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import ContactUs from "./bodyComponent/ContactUs"
 import UpperBody from "./bodyComponent/upperBody"
 import Footer from "./header_footer/Footer"
@@ -12,6 +12,7 @@ import Cookies from "js-cookie"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 
 export default function(){
+  const [user, setUser] = useState()
 
   useEffect(()=>{
       const nameCookie = Cookies.get("username").replace("@", "%40")
@@ -32,7 +33,7 @@ export default function(){
           const url = `/login/user?username=${nameCookie}&password=${passwordCookie}`
           console.log(url)
           axios.get(url)
-          .then(res=>console.log(res.data))
+          .then(res=>setUser(res.data))
           .catch(error=>console.log(error))
 
           // "/login/user?username=login%40login.jp&password=123456"
@@ -51,6 +52,7 @@ export default function(){
     return(
         <>
         <Header />
+        {`signed in as ${user?.name}`}
         <UpperBody />
         <Search />
         <ContactUs />
