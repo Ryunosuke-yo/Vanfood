@@ -1,7 +1,8 @@
 const express = require('express')
 const path = require('path');
 const mongoose = require("mongoose")
-const user = require("./src/lib/user")
+const user = require("./src/lib/user");
+const { async } = require('regenerator-runtime');
 const app = express()
 const port = 3000
 require('dotenv').config();
@@ -31,36 +32,43 @@ app.listen(port, () => {
 
 
 
-// app.get('/', (req, res) => {
-//   // res.sendFile(path.join(__dirname, "public/index.html"))
-//   res.render("index.html");
-// });
-
 app.post("/postuser", async (req, res)=>{
   const {username, password} = req.body
   const newUser = new user({
     name : username,
     password : password
   })
-  console.log(newUser);
+  // console.log(newUser);
   await newUser.save();
   res.sendFile(path.join(__dirname, "public/index.html"))
 });
 
-// app.get('/search', (req,res) => {
-//   const searchText = req.query.searchText;
-//   const localArea = req.query.localArea;
-  
-//   const meal = req.query.meal;
-//   const hamper = req.query.hamper;
-  
-//   const delivery = req.query.delivery;
-//   const wheelchair = req.query.wheelchair;
-//   console.log(searchText);
-//   console.log(meal);
-//   // const services = document.querySelector(".services-section>.container");
-//   // const searchTextHTML = document.createElement("p");
-//   // const searchTextHTMLText = document.createTextNode(`${searchText}`);
-//   // searchTextHTML.appendChild(searchTextHTMLText);
-//   res.render('index2', {searchTextHTML:searchText});
-// });
+let loggedInUser
+app.get("/login/user", async (req, res)=>{
+  const {username, password} =req.query
+  console.log(username)
+  try {
+    const getU = await user.findOne({name : username, password : password}).exec()
+    
+    console.log(getU)
+    res.send(getU)
+    // console.log(getUserFromMongoDB)
+    // res.json(getUserFromMongoDB)
+    // loggedInUser = getUserFromMongoDB
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+// app.get("/getuser", async (req, res)=>{
+//   const {username, password} =req.query
+//   try {
+//     const getUserFromMongoDB = await user.findOne({name : username, password : password}).exec()
+//     // console.log(getUserFromMongoDB)
+//     res.json(getUserFromMongoDB)
+//     loggedInUser = getUserFromMongoDB
+//   } catch (error) {
+//     console.log(error)
+//   }
+// })
+
