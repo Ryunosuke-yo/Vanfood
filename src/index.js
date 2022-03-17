@@ -1,6 +1,5 @@
 
 import './style.css';
-import './script.js';
 import ReactDOM from 'react-dom'; // installed using npm
 import {
     BrowserRouter,
@@ -9,8 +8,6 @@ import {
   } from "react-router-dom";
 
 import React from 'react';
-
-
 
 import App from './App';
 import LoginForm from './login_signup/LoginForm';

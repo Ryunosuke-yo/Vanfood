@@ -1,7 +1,21 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "axios"
+import Cookies from "js-cookie";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { authFirebase } from "../lib/firebase";
 
 export default function(){
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const navigateTo = useNavigate()
+
+    const onSubmit = data => {
+        axios.get("/login/user", {params : data})
+        Cookies.set("username", data.username)
+        Cookies.set("password", data.password)
+        navigateTo("/")
+    }
 
     return (
     <div className="loginPage">
@@ -18,11 +32,11 @@ export default function(){
             <div className="loginForm">
                 <h6>Welcome</h6>
                 <h3>Join The Community</h3>
-                <form className="userloginform">
+                <form className="userloginform" onSubmit={handleSubmit(onSubmit)}>
                         <label>Email : </label>   
-                        <input type="email" name="username" required />  
+                        <input type="email" name="username" required {...register("username")}/>  
                         <label>Password : </label>   
-                        <input type="password"  name="password" required />  
+                        <input type="password"  name="password" required {...register("password")}/>  
                         <button type="submit" className="btn-default">Log In</button> 
                 </form>
                 <p>Don’t have account? <a href="signup.html">Create Account</a></p>

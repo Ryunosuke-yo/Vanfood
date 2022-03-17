@@ -1,6 +1,23 @@
+import axios from "axios";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { authFirebase } from "../lib/firebase";
+import { useNavigate } from "react-router-dom"
+import Cookies from "js-cookie";
 
 export default function(){
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const navigateTo = useNavigate()
+
+    const onSubmit = async data => {
+        axios.post("/postuser", data)
+        createUserWithEmailAndPassword(authFirebase, data.username, data.password)
+        Cookies.set("username", data.username)
+        Cookies.set("password", data.password)
+        
+        navigateTo("/")
+    }
 
     return (
         <div className="loginPage">
@@ -17,11 +34,11 @@ export default function(){
             <div className="loginForm">
             <h6>Welcome</h6>
             <h3>Sign Up as a new user</h3>
-            <form className="userloginform" action="/postuser" method="post">
+            <form className="userloginform" onSubmit={handleSubmit(onSubmit)}>
                     <label>Email : </label>   
-                    <input type="email" name="username" required className="signUp_email" />  
+                    <input type="email" name="username" required className="signUp_email" {...register("username")}/>  
                     <label>Password : </label>   
-                    <input type="password"  name="password" required className="signUp_password" />  
+                    <input type="password"  name="password" required className="signUp_password" {...register("password")}/>  
                     <button type="submit" class="btn-default">Sign Up</button> 
             </form>
             <p>Already have an account? <a href="login.html">Login</a></p>
