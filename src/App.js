@@ -15,8 +15,8 @@ export default function(){
   const [user, setUser] = useState()
 
   useEffect(()=>{
-      const nameCookie = Cookies.get("username").replace("@", "%40")
-      const passwordCookie = Cookies.get("password")
+      const nameCookie = Cookies.get("username");
+      const passwordCookie = Cookies.get("password");
         
         initFirebase
         signInWithEmailAndPassword(authFirebase, nameCookie, passwordCookie)
@@ -30,7 +30,7 @@ export default function(){
             const errorMessage = error.message;
             console.log(error)
           });
-          const url = `/login/user?username=${nameCookie}&password=${passwordCookie}`
+          const url = `/login/user?username=${nameCookie.replace("@", "%40")}&password=${passwordCookie}`
           console.log(url)
           axios.get(url)
           .then(res=>setUser(res.data))
