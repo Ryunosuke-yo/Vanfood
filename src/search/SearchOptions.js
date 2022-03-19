@@ -1,42 +1,82 @@
-import React from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-import ReactDOM from 'react-dom'; 
+import ReactDOM from "react-dom";
+import { set } from "react-hook-form";
+import program from "../lib/program";
+import LocalAreas  from "./LocalAreas";
 
+const SearchOptions = (props) => {
+  const [areas, setAreas] = useState([]);
 
-const SearchOptions = props => {
-    return(
-        <>
-        <section className="filter-section">
+  useEffect(function loadAreas() {
+    axios
+      .get("/locations")
+      .then((result) => {
+        console.log(result.data.location);
+        setAreas(result.data.location);
+        
+        
+      })
+      .catch((error) => console.log(error));
+      console.log(areas);
+    }, []);
+
+  return (
+    <>
+      <section className="filter-section">
         <div className="container">
           <div className="searchForm">
             <h3>Check If you any available service in your area</h3>
             <form action="/search" method="GET">
               <div className="fieldWrap">
                 <div className="inputWrap">
-                  <input type="text" name="searchText" id="searchText"
-                    placeholder="Type keyword here or left it blank for all results"></input>
+                  <input
+                    type="text"
+                    name="searchText"
+                    id="searchText"
+                    placeholder="Type keyword here or left it blank for all results"
+                    onChange={(event) => props.handleSearchOptionsChange(event)}
+                  ></input>
                 </div>
               </div>
               <div className="fieldWrap">
                 <p>Local Areas</p>
                 <div className="inputWrap">
-                  <select name="localArea" id="localArea">
-                    <option value="Downtown">Downtown</option>
-                    <option value="location1">Location 1</option>
-                    <option value="location2">Location 2</option>
-                    <option value="location3">Location 3</option>
+                  <select
+                    name="localArea"
+                    id="localArea"
+                    onChange={(event) => props.handleSearchOptionsChange(event)}
+                  >
+                    <LocalAreas areas={areas} />
                   </select>
                 </div>
               </div>
               <div className="fieldWrap">
                 <p>Provide meals</p>
                 <div className="inputWrap">
-                  <label className="radioWrap">Yes
-                    <input type="radio" name="meal" />
+                  <label className="radioWrap">
+                    Yes
+                    <input
+                      type="radio"
+                      name="meal"
+                      value="true"
+                      onClick={(event) =>
+                        props.handleSearchOptionsChange(event)
+                      }
+                    />
                     <span className="checkmark"></span>
                   </label>
-                  <label className="radioWrap">No
-                    <input type="radio" checked name="meal" />
+                  <label className="radioWrap">
+                    No
+                    <input
+                      type="radio"
+                      name="meal"
+                      value="false"
+                      onClick={(event) =>
+                        props.handleSearchOptionsChange(event)
+                      }
+                    />
                     <span className="checkmark"></span>
                   </label>
                 </div>
@@ -44,12 +84,28 @@ const SearchOptions = props => {
               <div className="fieldWrap">
                 <p>Provide Hampers</p>
                 <div className="inputWrap">
-                  <label className="radioWrap">Yes
-                    <input type="radio" name="hamper" />
+                  <label className="radioWrap">
+                    Yes
+                    <input
+                      type="radio"
+                      name="hamper"
+                      value="true"
+                      onChange={(event) =>
+                        props.handleSearchOptionsChange(event)
+                      }
+                    />
                     <span className="checkmark"></span>
                   </label>
-                  <label className="radioWrap">No
-                    <input type="radio" checked name="hamper" />
+                  <label className="radioWrap">
+                    No
+                    <input
+                      type="radio"
+                      name="hamper"
+                      value="false"
+                      onChange={(event) =>
+                        props.handleSearchOptionsChange(event)
+                      }
+                    />
                     <span className="checkmark"></span>
                   </label>
                 </div>
@@ -57,12 +113,28 @@ const SearchOptions = props => {
               <div className="fieldWrap">
                 <p>Delivery available?</p>
                 <div className="inputWrap">
-                  <label className="radioWrap">Yes
-                    <input type="radio" name="delivery" />
+                  <label className="radioWrap">
+                    Yes
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value="true"
+                      onChange={(event) =>
+                        props.handleSearchOptionsChange(event)
+                      }
+                    />
                     <span className="checkmark"></span>
                   </label>
-                  <label className="radioWrap">No
-                    <input type="radio" checked name="delivery" />
+                  <label className="radioWrap">
+                    No
+                    <input
+                      type="radio"
+                      name="delivery"
+                      value="false"
+                      onChange={(event) =>
+                        props.handleSearchOptionsChange(event)
+                      }
+                    />
                     <span className="checkmark"></span>
                   </label>
                 </div>
@@ -70,25 +142,41 @@ const SearchOptions = props => {
               <div className="fieldWrap">
                 <p>Wheel Chair accessible?</p>
                 <div className="inputWrap">
-                  <label className="radioWrap">Yes
-                    <input type="radio" name="wheelchair" />
+                  <label className="radioWrap">
+                    Yes
+                    <input
+                      type="radio"
+                      name="wheelchair"
+                      value="true"
+                      onChange={(event) =>
+                        props.handleSearchOptionsChange(event)
+                      }
+                    />
                     <span className="checkmark"></span>
                   </label>
-                  <label className="radioWrap">No
-                    <input type="radio" checked name="wheelchair" />
+                  <label className="radioWrap">
+                    No
+                    <input
+                      type="radio"
+                      name="wheelchair"
+                      value="false"
+                      onChange={(event) =>
+                        props.handleSearchOptionsChange(event)
+                      }
+                    />
                     <span className="checkmark"></span>
                   </label>
                 </div>
               </div>
-              <button type="submit" className="btn-primary">Search</button>
+              <button type="submit" className="btn-primary">
+                Search
+              </button>
             </form>
           </div>
         </div>
       </section>
-
-        
-        </>
-    )
-}
+    </>
+  );
+};
 
 export default SearchOptions;
