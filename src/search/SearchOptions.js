@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { set } from "react-hook-form";
 import program from "../lib/program";
-import LocalAreas  from "./LocalAreas";
+import LocalAreas    from "./LocalAreas";
 
 const SearchOptions = (props) => {
   const [areas, setAreas] = useState([]);
@@ -14,6 +14,7 @@ const SearchOptions = (props) => {
       .get("/locations")
       .then((result) => {
         console.log(result.data.location);
+        result.data.location = ["All", ...result.data.location];
         setAreas(result.data.location);
         
         
@@ -168,9 +169,6 @@ const SearchOptions = (props) => {
                   </label>
                 </div>
               </div>
-              <button type="submit" className="btn-primary">
-                Search
-              </button>
             </form>
           </div>
         </div>

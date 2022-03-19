@@ -8,7 +8,7 @@ import { useState } from "react";
 const Search = (props) => {
   const [searchOptions, setSearchOptions] = useState({
     searchText: "",
-    localArea: "Downtown",
+    localArea: "All",
     meal: "false",
     hamper: "false",
     delivery: "false",
@@ -22,23 +22,17 @@ const Search = (props) => {
   };
   return (
     <>
-      <h1>Text: {searchOptions.searchText}
-      </h1>
-      
-      <h1>LocalArea: {searchOptions.localArea}
-      </h1>
-      
-      <h1>Meal: {searchOptions.meal}
-      </h1>
-      
-      <h1>Hamper: {searchOptions.hamper}
-      </h1>
-      
-      <h1>Delivery: {searchOptions.delivery}
-      </h1>
-      
-      <h1>WheelChair: {searchOptions.wheelchair}
-      </h1>
+      {/* <h1>Text: {searchOptions.searchText}</h1>
+
+      <h1>LocalArea: {searchOptions.localArea}</h1>
+
+      <h1>Meal: {searchOptions.meal}</h1>
+
+      <h1>Hamper: {searchOptions.hamper}</h1>
+
+      <h1>Delivery: {searchOptions.delivery}</h1>
+
+      <h1>WheelChair: {searchOptions.wheelchair}</h1> */}
       <SearchOptions
         searchOptions={searchOptions}
         handleSearchOptionsChange={handleSearchOptionsChange}
