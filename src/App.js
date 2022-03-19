@@ -54,7 +54,7 @@ export default function(){
         <Header />
         {`signed in as ${user?.name}`}
         <UpperBody />
-        <Search />
+      <Search user={user}/>
         <ContactUs />
         <Footer />
         </>

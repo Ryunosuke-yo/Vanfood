@@ -37,7 +37,7 @@ const Search = (props) => {
         searchOptions={searchOptions}
         handleSearchOptionsChange={handleSearchOptionsChange}
       />
-      <SearchResults searchOptions={searchOptions} />
+      <SearchResults searchOptions={searchOptions} user={props.user}/>
     </>
   );
 };

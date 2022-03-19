@@ -26,7 +26,7 @@ const SearchResults = (props) => {
     <>
       <section className="services-section">
         <div className="container">
-          <Results results={results} />
+          <Results results={results} user={props.user}/>
         </div>
       </section>
     </>
