@@ -7,8 +7,10 @@ const { default: axios } = require("axios");
 const program = require("./src/lib/program");
 const { resourceLimits } = require("worker_threads");
 const { send } = require("process");
+const { readdirSync } = require("fs");
 const app = express();
 const port = 3000;
+
 require("dotenv").config();
 
 app.use(express.static("public"));
@@ -56,6 +58,7 @@ app.post("/postuser", async (req, res) => {
   });
   // console.log(newUser);
   await newUser.save();
+  // res.send("success");
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
@@ -89,6 +92,82 @@ app.get("/login/user", async (req, res) => {
 //     console.log(error)
 //   }
 // })
+app.post("/subscriptions", (req, res) => {
+  const username = req.body.username;
+  console.log(username);
+  user
+    .findOne({ name: username }, { subscribed: 1 })
+    .then((result) => {
+      console.log(`Current Subscriptions of ${username} are ${result}`);
+      if (result != null) {
+        res.send(result.subscribed);
+      } else {
+        res.send([]);
+      }
+    })
+    .catch((error) => console.log(error));
+  // res.send("failure");
+});
+
+app.patch("/subscriptions", (req, res) => {
+  const subscriptionID = req.body.subscriptionID;
+  const username = req.body.username;
+  console.log(subscriptionID);
+  console.log(username);
+  user
+    .findOne({ name: username }, { subscribed: 1 })
+    .then((result) => {
+      console.log(result.subscribed);
+      user
+        .updateOne(
+          { name: username },
+          { subscribed: [...result.subscribed, subscriptionID] }
+        )
+        .then((result2) => res.send([...result.subscribed, subscriptionID]))
+        .catch((error) => console.log(error));
+    })
+    .catch((error) => console.log(error));
+
+  // res.send("success");
+});
+
+app.patch("/deleteSubscriptions", (req, res) => {
+  const subscriptionID = req.body.subscriptionID;
+  const username = req.body.username;
+  console.log(subscriptionID);
+  console.log(username);
+  user
+    .findOne({ name: username }, { subscribed: 1 })
+    .then((result) => {
+      console.log(result.subscribed);
+      // const updatedSubscriptions =
+      user
+        .updateOne(
+          { name: username },
+          {
+            subscribed: result.subscribed.filter((element) => {
+              if (element != subscriptionID) {
+                return element;
+              }
+            }),
+          }
+        )
+        .then((result2) => {
+          console.log(result2);
+          // res.send()
+          const updatedSubscriptions = result.subscribed.filter((element) => {
+            if (element != subscriptionID) {
+              return element;
+            }
+          });
+          res.send(updatedSubscriptions);
+        })
+        .catch((error) => console.log(error));
+    })
+    .catch((error) => console.log(error));
+
+  // res.send("success");
+});
 
 app.get("/locations", (req, res) => {
   let locationSet = new Set();
@@ -146,27 +225,23 @@ app.post("/results", (req, res) => {
       });
 
       // Location Filter
-     sendResults =  sendResults.filter((element) => {
+      sendResults = sendResults.filter((element) => {
         // console.log(req.body.searchOptions.localArea);
         if (req.body.searchOptions.localArea == "All") {
           // console.log("1");
           return element;
         } else if (
-          
           element.fields["local_areas"] == req.body.searchOptions.localArea
         ) {
           // console.log("2");
           return element;
-
-        }
-        else {
+        } else {
           // console.log("3");
-        } 
-
+        }
       });
 
       // Meal Filter
-     sendResults =  sendResults.filter((element) => {
+      sendResults = sendResults.filter((element) => {
         if (req.body.searchOptions.meal == "false") {
           return element;
         } else if (
