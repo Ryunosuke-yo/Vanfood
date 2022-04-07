@@ -2,12 +2,8 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const user = require("./src/lib/user");
-const { async } = require("regenerator-runtime");
 const { default: axios } = require("axios");
 const program = require("./src/lib/program");
-const { resourceLimits } = require("worker_threads");
-const { send } = require("process");
-const { readdirSync } = require("fs");
 const app = express();
 const port = 3000;
 
