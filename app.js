@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+const cors = require('cors');
 const user = require("./src/lib/user");
 const { default: axios } = require("axios");
 const program = require("./src/lib/program");
@@ -13,6 +14,8 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cors());
+app.options('*', cors());
 // app.set("view engine", "ejs");
 
 const connectMongo = async () => {
@@ -296,3 +299,6 @@ app.post("/results", (req, res) => {
     })
     .catch((error) => console.log(error));
 });
+
+const contactRouter = require('./routes/contact.js');
+app.use('/api/v1/contacts', contactRouter);
